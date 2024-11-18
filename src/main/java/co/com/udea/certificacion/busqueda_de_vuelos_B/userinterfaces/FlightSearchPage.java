@@ -1,6 +1,5 @@
 package co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces;
 
-import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.screenplay.targets.Target;
 
@@ -17,5 +16,11 @@ public class FlightSearchPage extends PageObject {
     public static final Target PASSENGERS_SELECTION_BTN = Target.the("Número de pasajeros")
             .locatedBy("//*[@id=\"__next\"]/div/div/div/form/div[3]/div[2]/div/button");
 
-    public static final Target SEARCH_BTN = Target.the("Buscar").located(By.buttonText("Search"));
+    public static final Target getPassengersOption(int passengers) {
+        return Target.the("Option %d".formatted(passengers)).locatedBy(
+                "//*[@id=\"radix-:R576:\"]/div/div/div[%d]".formatted(passengers + 2));
+    }
+
+    public static final Target SEARCH_BTN = Target.the("Buscar")
+            .locatedBy("//*[@id=\"__next\"]/div/div/div/form/div[4]/button");
 }

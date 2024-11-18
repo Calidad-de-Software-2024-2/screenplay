@@ -9,4 +9,5 @@ public class ListedFlightsPage {
     public static final Target DATE_RANGE_BTN = Target.the("Seleccionar rango de fechas")
             .located(By.buttonText("Rango de fechas")); // TODO: This btn does not exist atm
 
+    public static final Target ERROR_MESSAGE = Target.the("Mensaje errororo").locatedBy("//*[@id=\"__next\"]/div/div/div/div[2]/p");
 }
