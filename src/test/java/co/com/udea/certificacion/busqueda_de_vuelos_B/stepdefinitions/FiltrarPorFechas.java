@@ -1,90 +1,70 @@
 package co.com.udea.certificacion.busqueda_de_vuelos_B.stepdefinitions;
 
-import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
+import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
+import static org.hamcrest.Matchers.containsString;
 
-import co.com.udea.certificacion.busqueda_de_vuelos_B.questions.Validation;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.questions.ValidationBusquedaError;
+import java.time.LocalDate;
 
-import org.hamcrest.Matchers;
 import org.openqa.selenium.WebDriver;
 
-import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.BusquedaCorrecta;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.ConnectTo;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.questions.SelectedDate;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.FilterBy;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.OpenThe;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.FindOutThe;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.BuscarVuelo;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.GooglePage;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.SearchFlight;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.But;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import kotlin.NotImplementedError;
 import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.actions.Click;
-import net.serenitybdd.screenplay.actors.OnStage;
-import net.serenitybdd.screenplay.actors.OnlineCast;
-import static net.serenitybdd.screenplay.actors.OnStage.setTheStage;
-import io.cucumber.java.Before;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import net.serenitybdd.annotations.Managed;
-import net.serenitybdd.screenplay.Actor;
-import net.serenitybdd.screenplay.GivenWhenThen;
-import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.actors.OnlineCast;
-import org.hamcrest.Matchers;
-import org.openqa.selenium.WebDriver;
+
 public class FiltrarPorFechas {
 
-    Actor usuario = Actor.named("usuario");
-    
-    @Managed(driver = "chrome",uniqueSession = true)
+    Actor user = Actor.named("usuario");
+
+    @Managed
     public WebDriver theDriver;
+
     @Before
     public void config() {
-        usuario.can(BrowseTheWeb.with(theDriver));
-        setTheStage(new OnlineCast());
-        OnStage.setTheStage(new OnlineCast());
-        OnStage.theActorCalled("usuario");
+        user.can(BrowseTheWeb.with(theDriver));
     }
 
-    @Given("la usuaria se conecta al servicio")
-    public void thatTheUserConnectsToTheService() {
-        usuario.attemptsTo(OpenThe.browser(new GooglePage()));
-    }
-    @And("ingresa el nombre de la aerolinea {string}")
-    public void thatTheUserWantsToSearchForAFlight(String airlineName) {
-        usuario.remember("airlineName", airlineName);
+    @Given("que el usuario esta en la pagina de busqueda de vuelos")
+    public void userInTheWebsite() {
+        user.attemptsTo(OpenThe.flightSearchPage());
     }
 
-    @When("se realiza la busqueda de vuelos por nombre de aerolinea")
-    public void heEntersTheAirline() {
-        usuario.attemptsTo(FindOutThe.wordKey());
-       }
+    @And("el usuario ha realizado una búsqueda previa")
+    public void userHasEnteredOriginAndDestiny() {
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        user.attemptsTo(SearchFlight.by("Barranquilla", "Cartagena", tomorrow, 4));
+    }
+
+    @When("el usuario intenta filtrar por rango de fechas")
+    public void userFiltersByDateRange() {
+        // LocalDate from = LocalDate.now().minusDays(1);
+        // LocalDate to = LocalDate.now().plusDays(30);
+        // user.attemptsTo(FilterBy.dateRange(from, to));
+    }
+
+    @Then("el sistema permite seleccionar un rango de fechas")
+    public void systemAllowsDateSelection() {
+        throw new NotImplementedError("El botón de fecha no existe por tanto no se puede comprobar que valor contiene");
+    }
     
+    @But("si el usuario ha seleccionado fechas específicas en la búsqueda")
+    public void ifUserHasSelectedThat() {
+        throw new NotImplementedError("El botón de fecha no existe por tanto no se puede comprobar que valor contiene");
+    }
 
-    @Then("se muestra una lista de vuelos de {string}")
-    public void heShouldSeeTheFlightInformation(String airlineName) {
-         GivenWhenThen.then(usuario).should(GivenWhenThen.seeThat(Validation.theSite(), Matchers.containsString("Actualidad")));
-   }
-   @Given("que el usuario ha ingresado un rango de fechas para la busqueda")
-   public void givenTheUserHasEnteredADateRange() {
-        usuario.attemptsTo(BusquedaCorrecta.enCampos());
-       // Simula que la usuaria ha ingresado un rango de fechas
-   }
-
-   @When("no hay vuelos disponibles en las fechas seleccionadas")
-   public void whenNoFlightsAreAvailableInTheSelectedDates() {
-       // Aquí iría la lógica que verifica que no haya vuelos en el rango de fechas seleccionado
-       usuario.attemptsTo(Click.on(BuscarVuelo.SEARCH_BUTTON));
-   }
-
-   @Then("el sistema debe mostrar un mensaje indicando {string}")
-   public void thenTheSystemShouldShowNoFlightsMessage(String message) {
-       GivenWhenThen.then(usuario).should(GivenWhenThen.seeThat(ValidationBusquedaError.titleError(), Matchers.equalTo("No flights found for the given criteria.")));
-   }
+    @Then("el sistema no permite filtrar por rango de fechas")
+    public void systemsDisallowsDateFiltering() {
+        throw new NotImplementedError("Noc");
+    }
 
 }
