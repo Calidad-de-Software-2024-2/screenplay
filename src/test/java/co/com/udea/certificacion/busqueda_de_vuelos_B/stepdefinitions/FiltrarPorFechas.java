@@ -83,7 +83,7 @@ public class FiltrarPorFechas {
    }
 
    @Then("el sistema debe mostrar un mensaje indicando {string}")
-   public void thenTheSystemShouldShowNoFlightsMessage() {
+   public void thenTheSystemShouldShowNoFlightsMessage(String message) {
        GivenWhenThen.then(usuario).should(GivenWhenThen.seeThat(ValidationBusquedaError.titleError(), Matchers.equalTo("No flights found for the given criteria.")));
    }
 

@@ -12,10 +12,11 @@ public class BuscarVuelo extends PageObject {
     public static final Target ORIGIN_SELECT_BUTTON = Target.the("Origin select button")
             .locatedBy("//*[@id=\"__next\"]/div/div/div/form/div[1]/div[1]/div/button");
     public static final Target ORIGIN_SELECT = Target.the("Origin select")
-            .locatedBy("//*[@id=\"__next\"]/div/div/div/form/div[1]/div[1]/div/div/div[1]/input");
+            .locatedBy("/html/body/div[2]");
     public static final Target DESTINATION_SELECT_BUTTON = Target.the("Destination select button")
             .locatedBy("//*[@id=\"__next\"]/div/div/div/form/div[1]/div[2]/div/button");
-
+        public static final Target DESTINATION_SELECT = Target.the("Destination select")
+            .locatedBy("/html/body/div[2]");
     // Radio button para el tipo de vuelo
     public static final Target DEPARTURE_RADIO = Target.the("Departure radio button")
             .locatedBy("//*[@id=\"r1\"]");

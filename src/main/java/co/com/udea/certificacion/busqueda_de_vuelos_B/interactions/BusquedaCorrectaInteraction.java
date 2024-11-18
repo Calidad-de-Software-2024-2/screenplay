@@ -13,13 +13,14 @@ public class BusquedaCorrectaInteraction implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-            // Llenar el campo de origen
-            SelectFromOptions.byValue("Cartagena").from(BuscarVuelo.ORIGIN_SELECT_BUTTON),
-            
-            // Llenar el campo de destino
-            SelectFromOptions.byValue("Cali").from(BuscarVuelo.DESTINATION_SELECT_BUTTON),
-            
-            // Seleccionar tipo de vuelo (ida o ida y vuelta)
+            Click.on(BuscarVuelo.DESTINATION_SELECT_BUTTON),
+            // Seleccionar destino
+            Click.on(BuscarVuelo.DESTINATION_SELECT.of("Cali")),
+            Click.on(BuscarVuelo.ORIGIN_SELECT_BUTTON),
+            // Seleccionar origen
+            Click.on(BuscarVuelo.ORIGIN_SELECT.of("Medellín")),
+            // Hacer clic en el botón de selección de destino
+
             Click.on(BuscarVuelo.DEPARTURE_RADIO),
             // O bien, para ida y vuelta:
             // Click.on(BuscarVuelo.ROUNDTRIP_RADIO),
