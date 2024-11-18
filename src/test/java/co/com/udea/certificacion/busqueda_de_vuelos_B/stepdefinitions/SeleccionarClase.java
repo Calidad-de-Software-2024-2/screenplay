@@ -15,7 +15,7 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 
-public class FlightOriginSearchStepDefinition {
+public class SeleccionarClase {
 
     Actor usuario = Actor.named("usuario");
     String origin;

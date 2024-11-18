@@ -6,8 +6,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
-        features = "src/test/resources/features/searchbydestination.feature",
+        features = "src/test/resources/features/filtrarPorPrecio.feature",
         glue = "co.com.udea.certificacion.busqueda_de_vuelos_B.stepdefinitions",
         snippets = CucumberOptions.SnippetType.CAMELCASE
 )
-public class FlightDestinationSearchRunner {}
+public class FiltrarPorPrecio {}

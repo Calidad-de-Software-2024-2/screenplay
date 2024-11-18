@@ -13,7 +13,7 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
-public class FlightPriceSearchStepDefinition {
+public class selectCantidadPasajeros {
     
     Actor usuario = Actor.named("usuario");
 
