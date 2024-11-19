@@ -42,12 +42,11 @@ public class FillThe implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 SelectCity.origin(origin),
-                SelectCity.destiny(destiny),
-                SelectTravelType.roundTrip());
+                SelectCity.destiny(destiny));
 
         actor.attemptsTo(Click.on(FlightSearchPage.DATE_SELECTION_BTN)); // abre la selección de fechas
         if (returnDate != null) { // ida y vuelta
-            actor.attemptsTo(SelectDate.returnDate(returnDate),
+            actor.attemptsTo(SelectTravelType.roundTrip(), SelectDate.returnDate(returnDate),
             SelectDate.departureDate(departureDate, true)
                     );
         } else { // solo ida
