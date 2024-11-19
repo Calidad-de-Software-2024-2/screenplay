@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import org.openqa.selenium.WebDriver;
 
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.containsText;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.FillFields;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.FillThe;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.OpenThe;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.FlightSearchPage;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.ListedFlightsPage;
@@ -36,7 +36,7 @@ public class FiltrarPorFechas {
     public void given() {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         LocalDate afterTomorrow = LocalDate.now().plusDays(2);
-        user.attemptsTo(FillFields.with("Bucaramanga", "Santa Marta", tomorrow,afterTomorrow, 2));
+        user.attemptsTo(FillThe.rountTripFields("Bucaramanga", "Santa Marta", tomorrow, afterTomorrow, 2));
     }
 
     @When("el usuario hace clic en buscar")
