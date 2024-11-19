@@ -9,21 +9,21 @@ import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.actions.Click;
 
-public class SelectDate implements Interaction {
+public class DepartureDate implements Interaction {
 
-    private LocalDate date;
+    private LocalDate departureDate;
 
-    public SelectDate(LocalDate date) {
-        this.date = date;
+    public DepartureDate(LocalDate departureDate) {
+        this.departureDate = departureDate;
     }
 
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(Click.on(FlightSearchPage.DATE_SELECTION_BTN),
-                Click.on(By.buttonText(Integer.toString(date.getDayOfMonth()))));
+                Click.on(By.buttonText(Integer.toString(departureDate.getDayOfMonth()))));
     }
 
-    public static SelectDate departureDate(LocalDate date) {
-        return Tasks.instrumented(SelectDate.class, date);
+    public static DepartureDate departureDate(LocalDate date) {
+        return Tasks.instrumented(DepartureDate.class, date);
     }
 }

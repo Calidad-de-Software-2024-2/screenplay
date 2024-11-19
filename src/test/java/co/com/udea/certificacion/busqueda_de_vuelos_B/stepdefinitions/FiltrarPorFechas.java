@@ -33,9 +33,10 @@ public class FiltrarPorFechas {
     }
 
     @Given("que el usuario ha ingresado un rango de fechas para la búsqueda")
-    public void queElUsuarioHaIngresadoUnRangoDeFechasParaLaBúsqueda() {
+    public void given() {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
-        user.attemptsTo(FillFields.with("Bucaramanga", "Santa Marta", tomorrow, 2));
+        LocalDate afterTomorrow = LocalDate.now().plusDays(2);
+        user.attemptsTo(FillFields.with("Bucaramanga", "Santa Marta", tomorrow,afterTomorrow, 2));
     }
 
     @When("el usuario hace clic en buscar")

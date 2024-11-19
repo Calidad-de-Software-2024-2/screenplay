@@ -22,6 +22,7 @@ public static final Target ROUND_TRIP= Target.the("Viaje redondo")
         return Target.the("Option %d".formatted(passengers)).locatedBy(
                 "//*[@id=\"radix-:R576:\"]/div/div/div[%d]".formatted(passengers + 2));
     }
+    
 
     public static final Target SEARCH_BTN = Target.the("Buscar")
             .locatedBy("//*[@id=\"__next\"]/div/div/div/form/div[4]/button");
