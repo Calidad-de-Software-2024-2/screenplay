@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.containsText;
 import static org.hamcrest.Matchers.anyOf;
-
+import net.serenitybdd.screenplay.GivenWhenThen;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.FillThe;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.OpenThe;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.FlightSearchPage;
