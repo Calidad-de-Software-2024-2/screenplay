@@ -47,8 +47,9 @@ public class FillThe implements Task {
 
         actor.attemptsTo(Click.on(FlightSearchPage.DATE_SELECTION_BTN)); // abre la selección de fechas
         if (returnDate != null) { // ida y vuelta
-            actor.attemptsTo(SelectDate.departureDate(departureDate, true),
-                    SelectDate.returnDate(returnDate));
+            actor.attemptsTo(SelectDate.returnDate(returnDate),
+            SelectDate.departureDate(departureDate, true)
+                    );
         } else { // solo ida
             actor.attemptsTo(SelectDate.departureDate(departureDate, false));
         }

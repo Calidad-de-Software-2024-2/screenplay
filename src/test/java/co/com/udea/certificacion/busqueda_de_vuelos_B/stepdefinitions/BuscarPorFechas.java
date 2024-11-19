@@ -19,9 +19,10 @@ import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 
-public class FiltrarPorFechas {
+public class BuscarPorFechas {
 
     Actor user = Actor.named("usuario");
 
@@ -33,7 +34,19 @@ public class FiltrarPorFechas {
         user.can(BrowseTheWeb.with(theDriver));
         user.attemptsTo(OpenThe.flightSearchPage());
     }
+    @Given("que el usuario está ingresando un rango de fechas para la búsqueda donde la fecha maxima es anterior a la fecha mínima")
+    public void queElUsuarioEstaSeleccionandoUnRangoDeFechasParaLaBusqueda() {
+        LocalDate departureDay = LocalDate.now().plusDays(2);
+        LocalDate dayBeforeDeparture = departureDay.minusDays(1);
+        user.attemptsTo(FillThe.rountTripFields("Bucaramanga", "Santa Marta",departureDay,dayBeforeDeparture, 2));
+    }
 
+
+    @Then("el sistema muestra un mensaje de error indicando que la fecha máxima no puede ser anterior a la fecha mínima")
+    public void elSistemaMuestraMensajeErrorFechaMaximaAnteriorFechaMinima() {
+        WaitUntil.the(ListedFlightsPage.ERROR_MESSAGE, WebElementStateMatchers.containsText("No flights"))
+                 .forNoMoreThan(5).seconds();
+    }
     @Given("que el usuario ha ingresado un rango de fechas para la búsqueda")
     public void given() {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
@@ -49,7 +62,7 @@ public class FiltrarPorFechas {
     @Then("el sistema debe mostrar un mensaje indicando que no hay vuelos disponibles en el rango de fechas seleccionado")
     public void then() {
         user.attemptsTo(
-                WaitUntil.the(ListedFlightsPage.ERROR_MESSAGE, anyOf(containsText("no flights"),
+                WaitUntil.the(ListedFlightsPage.ERROR_MESSAGE, anyOf(containsText("No flights"),
                         containsText("no hay vuelos")))
                         .forNoMoreThan(5).seconds());
     }

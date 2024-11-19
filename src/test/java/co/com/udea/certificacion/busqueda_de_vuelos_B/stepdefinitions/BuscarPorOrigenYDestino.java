@@ -5,7 +5,7 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 
-public class OrdenarPorPrecio {
+public class BuscarPorOrigenYDestino {
     Actor usuario = Actor.named("usuario");
 
     @Before
