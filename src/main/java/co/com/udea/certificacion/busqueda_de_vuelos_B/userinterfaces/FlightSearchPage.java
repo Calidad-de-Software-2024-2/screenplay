@@ -12,10 +12,12 @@ public class FlightSearchPage extends PageObject {
 
     public static final Target DATE_SELECTION_BTN = Target.the("Fecha de salida")
             .locatedBy("//*[@id=\"__next\"]/div/div/div/form/div[3]/div[1]/div/div/button");
-
+public static final Target ROUND_TRIP= Target.the("Viaje redondo")
+            .locatedBy("/html/body/div/div/div/div/form/div[2]/div/div[2]/button");
+        public static final Target ONE_WAY= Target.the("Viaje solo ida")
+            .locatedBy("/html/body/div/div/div/div/form/div[2]/div/div[1]/button");    
     public static final Target PASSENGERS_SELECTION_BTN = Target.the("Número de pasajeros")
             .locatedBy("//*[@id=\"__next\"]/div/div/div/form/div[3]/div[2]/div/button");
-
     public static final Target getPassengersOption(int passengers) {
         return Target.the("Option %d".formatted(passengers)).locatedBy(
                 "//*[@id=\"radix-:R576:\"]/div/div/div[%d]".formatted(passengers + 2));
