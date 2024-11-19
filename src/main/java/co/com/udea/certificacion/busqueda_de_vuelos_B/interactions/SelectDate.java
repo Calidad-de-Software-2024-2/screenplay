@@ -8,7 +8,6 @@ import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
-import net.serenitybdd.screenplay.ui.Button;
 
 public class SelectDate implements Interaction {
 
@@ -44,8 +43,8 @@ public class SelectDate implements Interaction {
                 container = FlightSearchPage.DEPARTURE_DIV;
             }
         }
-        Target btn = Button.withText(Integer.toString(date.getDayOfMonth())).inside(container);
-        actor.attemptsTo(Click.on(btn));
+        Target dayButton = FlightSearchPage.btnInside(container, Integer.toString(date.getDayOfMonth()));
+        actor.attemptsTo(Click.on(dayButton));
     }
 
     public static SelectDate departureDate(LocalDate date, boolean isRoundTrip) {

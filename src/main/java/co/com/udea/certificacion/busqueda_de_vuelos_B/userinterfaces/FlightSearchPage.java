@@ -31,6 +31,11 @@ public class FlightSearchPage extends PageObject {
                 "//*[@id=\"radix-:R576:\"]/div/div/div[%d]".formatted(passengers + 2));
     }
 
+    public static final Target btnInside(Target container, String text) {
+        return Target.the("Button %s".formatted(text))
+                .locatedBy(container.getCssOrXPathSelector() + "//button[text()='{0}']").of(text);
+    }
+
     public static final Target SEARCH_BTN = Target.the("Buscar")
             .locatedBy("//*[@id=\"__next\"]/div/div/div/form/div[4]/button");
 }

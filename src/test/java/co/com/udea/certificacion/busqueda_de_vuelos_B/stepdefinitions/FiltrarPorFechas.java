@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import org.openqa.selenium.WebDriver;
 
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.containsText;
+import static org.hamcrest.Matchers.anyOf;
+
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.FillThe;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.OpenThe;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.FlightSearchPage;
@@ -46,8 +48,10 @@ public class FiltrarPorFechas {
 
     @Then("el sistema debe mostrar un mensaje indicando que no hay vuelos disponibles en el rango de fechas seleccionado")
     public void then() {
-        WaitUntil.the(ListedFlightsPage.ERROR_MESSAGE, containsText("no flights"))
-                .forNoMoreThan(5).seconds();
+        user.attemptsTo(
+                WaitUntil.the(ListedFlightsPage.ERROR_MESSAGE, anyOf(containsText("no flights"),
+                        containsText("no hay vuelos")))
+                        .forNoMoreThan(5).seconds());
     }
 
 }
