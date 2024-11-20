@@ -1,5 +1,6 @@
 package co.com.udea.certificacion.busqueda_de_vuelos_B.interactions;
 
+import java.time.Duration;
 import java.time.LocalDate;
 
 import org.openqa.selenium.By;
@@ -48,10 +49,10 @@ public class SelectDate implements Interaction {
             }
         }
         Target dayButton = FlightSearchPage.btnInside(container, Integer.toString(date.getDayOfMonth()));
-        
 
         dateSelectionOpened = BrowseTheWeb.as(actor)
-                .isElementVisible(By.xpath(container.getCssOrXPathSelector()));
+                .isElementVisible(
+                        By.xpath(container.waitingForNoMoreThan(Duration.ofSeconds(10)).getCssOrXPathSelector()));
 
         if (!dateSelectionOpened) {
             // open it

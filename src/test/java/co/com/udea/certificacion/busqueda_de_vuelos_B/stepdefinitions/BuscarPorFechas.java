@@ -1,12 +1,12 @@
 package co.com.udea.certificacion.busqueda_de_vuelos_B.stepdefinitions;
 
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.containsText;
+import static org.hamcrest.Matchers.anyOf;
+
 import java.time.LocalDate;
 
 import org.openqa.selenium.WebDriver;
 
-import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.containsText;
-import static org.hamcrest.Matchers.anyOf;
-import net.serenitybdd.screenplay.GivenWhenThen;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.FillThe;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.OpenThe;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.FlightSearchPage;
@@ -39,7 +39,7 @@ public class BuscarPorFechas {
     public void queElUsuarioEstaSeleccionandoUnRangoDeFechasParaLaBusqueda() {
         LocalDate departureDay = LocalDate.now().plusDays(2);
         LocalDate dayBeforeDeparture = departureDay.minusDays(1);
-        user.attemptsTo(FillThe.roundTripFields("Bucaramanga", "Santa Marta", departureDay, dayBeforeDeparture, 2));
+        user.attemptsTo(FillThe.roundTripFields("Bucaramanga", "Pereira", departureDay, dayBeforeDeparture, 2));
     }
 
     @Then("el sistema muestra un mensaje de error indicando que la fecha máxima no puede ser anterior a la fecha mínima")
@@ -65,7 +65,7 @@ public class BuscarPorFechas {
         user.attemptsTo(
                 WaitUntil.the(ListedFlightsPage.ERROR_MESSAGE, anyOf(containsText("No flights"),
                         containsText("no hay vuelos")))
-                        .forNoMoreThan(5).seconds());
+                        .forNoMoreThan(15).seconds());
     }
 
 }

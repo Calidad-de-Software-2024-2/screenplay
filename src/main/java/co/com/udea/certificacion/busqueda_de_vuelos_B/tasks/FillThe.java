@@ -6,9 +6,11 @@ import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectCity;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectDate;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectPassengers;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectTravelType;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.FlightSearchPage;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Tasks;
+import net.serenitybdd.screenplay.actions.Click;
 
 public class FillThe implements Task {
 
@@ -48,7 +50,9 @@ public class FillThe implements Task {
             actor.attemptsTo(SelectTravelType.roundTrip(), SelectDate.returnDate(returnDate),
                     SelectDate.departureDate(departureDate, true));
         } else { // solo ida
-            actor.attemptsTo(SelectDate.departureDate(departureDate, false));
+            actor.attemptsTo(
+                    Click.on(FlightSearchPage.DATE_SELECTION_BTN),
+                    SelectDate.departureDate(departureDate, false));
         }
 
         actor.attemptsTo(

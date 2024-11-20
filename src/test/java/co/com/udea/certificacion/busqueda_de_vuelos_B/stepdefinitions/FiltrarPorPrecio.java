@@ -1,15 +1,14 @@
 package co.com.udea.certificacion.busqueda_de_vuelos_B.stepdefinitions;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.FillThe;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.CorrectFlightSearch;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.FilterBy;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.OpenThe;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.FlightSearchPage;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.ListedFlightsPage;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -18,7 +17,6 @@ import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 
@@ -36,10 +34,8 @@ public class FiltrarPorPrecio {
 
     @Given("que el usuario ha realizado una busqueda que arroje resultados")
     public void given() {
-        LocalDate tomorrow = LocalDate.now().plusDays(1);
-        user.attemptsTo(FillThe.departureFields("Barranquilla", "Cali", tomorrow, 2));
-        user.attemptsTo(Click.on(FlightSearchPage.SEARCH_BTN),
-                WaitUntil.the(By.xpath("/html/body/div/div/div/div/div[2]/div//p[contains(text(),'USD')]"),
+        user.attemptsTo(CorrectFlightSearch.with(),
+                WaitUntil.the(By.xpath(ListedFlightsPage.A_FLIGHT_CARD.getCssOrXPathSelector()),
                         WebElementStateMatchers.isVisible())
                         .forNoMoreThan(10).seconds());
 
