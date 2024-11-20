@@ -7,19 +7,23 @@ import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
 
-public class SelectTravelType implements Interaction{
+public class SelectTravelType implements Interaction {
     private Target button;
+
     public SelectTravelType(Target button) {
         this.button = button;
     }
+
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(Click.on(button));
     }
+
     public static SelectTravelType roundTrip() {
-        return Tasks.instrumented(SelectTravelType.class,FlightSearchPage.ROUND_TRIP);
+        return Tasks.instrumented(SelectTravelType.class, FlightSearchPage.ROUND_TRIP);
     }
+
     public static SelectTravelType oneWayTrip() {
-        return Tasks.instrumented(SelectTravelType.class,FlightSearchPage.ONE_WAY);
+        return Tasks.instrumented(SelectTravelType.class, FlightSearchPage.ONE_WAY);
     }
 }

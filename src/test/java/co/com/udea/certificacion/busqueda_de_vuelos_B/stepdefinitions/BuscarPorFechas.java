@@ -34,24 +34,25 @@ public class BuscarPorFechas {
         user.can(BrowseTheWeb.with(theDriver));
         user.attemptsTo(OpenThe.flightSearchPage());
     }
+
     @Given("que el usuario está ingresando un rango de fechas para la búsqueda donde la fecha maxima es anterior a la fecha mínima")
     public void queElUsuarioEstaSeleccionandoUnRangoDeFechasParaLaBusqueda() {
         LocalDate departureDay = LocalDate.now().plusDays(2);
         LocalDate dayBeforeDeparture = departureDay.minusDays(1);
-        user.attemptsTo(FillThe.rountTripFields("Bucaramanga", "Santa Marta",departureDay,dayBeforeDeparture, 2));
+        user.attemptsTo(FillThe.roundTripFields("Bucaramanga", "Santa Marta", departureDay, dayBeforeDeparture, 2));
     }
-
 
     @Then("el sistema muestra un mensaje de error indicando que la fecha máxima no puede ser anterior a la fecha mínima")
     public void elSistemaMuestraMensajeErrorFechaMaximaAnteriorFechaMinima() {
         WaitUntil.the(ListedFlightsPage.ERROR_MESSAGE, WebElementStateMatchers.containsText("No flights"))
-                 .forNoMoreThan(5).seconds();
+                .forNoMoreThan(5).seconds();
     }
+
     @Given("que el usuario ha ingresado un rango de fechas para la búsqueda")
     public void given() {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         LocalDate afterTomorrow = LocalDate.now().plusDays(2);
-        user.attemptsTo(FillThe.rountTripFields("Bucaramanga", "Santa Marta", tomorrow, afterTomorrow, 2));
+        user.attemptsTo(FillThe.roundTripFields("Bucaramanga", "Pereira", tomorrow, afterTomorrow, 2));
     }
 
     @When("el usuario hace clic en buscar")

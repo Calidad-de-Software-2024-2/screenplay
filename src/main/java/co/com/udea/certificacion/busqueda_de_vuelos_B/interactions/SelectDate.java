@@ -2,10 +2,13 @@ package co.com.udea.certificacion.busqueda_de_vuelos_B.interactions;
 
 import java.time.LocalDate;
 
+import org.openqa.selenium.By;
+
 import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.FlightSearchPage;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.Tasks;
+import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
 
@@ -36,6 +39,7 @@ public class SelectDate implements Interaction {
     @Override
     public <T extends Actor> void performAs(T actor) {
         Target container = FlightSearchPage.DEPARTURE_ONLY_DIV;
+        boolean dateSelectionOpened = false;
         if (isRoundTrip) {
             if (isReturnDate) {
                 container = FlightSearchPage.RETURN_DIV;
@@ -44,6 +48,15 @@ public class SelectDate implements Interaction {
             }
         }
         Target dayButton = FlightSearchPage.btnInside(container, Integer.toString(date.getDayOfMonth()));
+        
+
+        dateSelectionOpened = BrowseTheWeb.as(actor)
+                .isElementVisible(By.xpath(container.getCssOrXPathSelector()));
+
+        if (!dateSelectionOpened) {
+            // open it
+            actor.attemptsTo(Click.on(FlightSearchPage.DATE_SELECTION_BTN));
+        }
         actor.attemptsTo(Click.on(dayButton));
     }
 

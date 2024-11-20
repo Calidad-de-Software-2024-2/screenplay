@@ -6,11 +6,9 @@ import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectCity;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectDate;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectPassengers;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectTravelType;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.FlightSearchPage;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Tasks;
-import net.serenitybdd.screenplay.actions.Click;
 
 public class FillThe implements Task {
 
@@ -42,13 +40,13 @@ public class FillThe implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 SelectCity.origin(origin),
-                SelectCity.destiny(destiny));
+                SelectCity.destination(destiny));
 
-        actor.attemptsTo(Click.on(FlightSearchPage.DATE_SELECTION_BTN)); // abre la selección de fechas
+        // actor.attemptsTo(Click.on(FlightSearchPage.DATE_SELECTION_BTN)); // abre la
+        // selección de fechas
         if (returnDate != null) { // ida y vuelta
             actor.attemptsTo(SelectTravelType.roundTrip(), SelectDate.returnDate(returnDate),
-            SelectDate.departureDate(departureDate, true)
-                    );
+                    SelectDate.departureDate(departureDate, true));
         } else { // solo ida
             actor.attemptsTo(SelectDate.departureDate(departureDate, false));
         }
@@ -57,7 +55,7 @@ public class FillThe implements Task {
                 SelectPassengers.of(passengers));
     }
 
-    public static FillThe rountTripFields(String origin, String destiny, LocalDate departureDate, LocalDate arrivalDate,
+    public static FillThe roundTripFields(String origin, String destiny, LocalDate departureDate, LocalDate arrivalDate,
             int passengers) {
         return Tasks.instrumented(FillThe.class, origin, destiny, departureDate, arrivalDate, passengers);
     }

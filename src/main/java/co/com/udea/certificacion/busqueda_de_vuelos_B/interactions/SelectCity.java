@@ -28,7 +28,7 @@ public class SelectCity implements Task {
         return Tasks.instrumented(SelectCity.class, FlightSearchPage.ORIGIN_CITY_BTN, city);
     }
 
-    public static SelectCity destiny(String city) {
+    public static SelectCity destination(String city) {
         return Tasks.instrumented(SelectCity.class, FlightSearchPage.DESTINY_CITY_BTN, city);
     }
 
