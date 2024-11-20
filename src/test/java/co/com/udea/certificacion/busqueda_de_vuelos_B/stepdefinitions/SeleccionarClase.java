@@ -3,6 +3,9 @@ package co.com.udea.certificacion.busqueda_de_vuelos_B.stepdefinitions;
 import java.time.LocalDate;
 
 import org.openqa.selenium.WebDriver;
+import org.hamcrest.Matchers;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.questions.ValidateClassSelection;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.CorrectFlightSearch;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.FillThe;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.OpenThe;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.SelectClass;
@@ -14,15 +17,19 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.annotations.Managed;
+import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
 import net.serenitybdd.screenplay.questions.Text;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class SeleccionarClase {
 
@@ -35,9 +42,7 @@ public class SeleccionarClase {
     public void config() {
         user.can(BrowseTheWeb.with(theDriver));
         user.attemptsTo(OpenThe.flightSearchPage());
-        LocalDate tomorrow = LocalDate.now().plusDays(1);
-        user.attemptsTo(FillThe.departureFields("Medellín", "Cali", tomorrow, 2));
-        user.attemptsTo(Click.on(FlightSearchPage.SEARCH_BTN));
+        user.attemptsTo(CorrectFlightSearch.with());
     }
 
     @Given("el usuario abre la lista desplegable de clases")
@@ -50,18 +55,17 @@ public class SeleccionarClase {
     }
 
     @When("el usuario selecciona una clase de vuelo {string}")
-    public void elUsuarioSeleccionaUnaClaseDeVuelo(String clase) {
-        user.remember(clase,"clase");
-        user.attemptsTo(SelectClass.with(clase));
+    public void elUsuarioSeleccionaUnaClaseDeVuelo(String flightClass) {
+        user.remember("flightClass",flightClass);
+        user.attemptsTo(SelectClass.with(flightClass));
     }
     @Then("el sistema cambia el vuelo a la clase seleccionada")
     public void elSistemaPermiteElegirClaseEconomicaPrimeraClaseYOtras() {
-        String claseRecordada = user.recall("clase");
-        String textoBoton = Text.of(ListedFlightsPage.CATEGORY_BTN).answeredBy(user).toString();
-        GivenWhenThen.then(user).should(GivenWhenThen.seeThat("El texto del botón de clase es igual a la clase seleccionada", x -> textoBoton.equals(claseRecordada)));
+        GivenWhenThen.then(user).should(GivenWhenThen.seeThat(ValidateClassSelection.classSelected(user.recall("flightClass"),ListedFlightsPage.CATEGORY_BTN)));
     }
     @When("el usuario selecciona la opcion de {string}")
     public void elUsuarioSeleccionaUnaOpcionDeClase(String clase) {
+        user.remember("clase",clase );
         user.attemptsTo(
             WaitUntil.the(ClassDetails.btnInside(clase), isVisible()).forNoMoreThan(20).seconds(),
             Click.on(ClassDetails.btnInside(clase))
@@ -70,7 +74,6 @@ public class SeleccionarClase {
 
     @Then("el sistema muestra los detalles de la clase seleccionada, como restricciones y beneficios")
     public void elSistemaMuestraDetallesDeClaseSeleccionada() {
-        user.recall("clase");
-        GivenWhenThen.then(user).should(GivenWhenThen.seeThat(Text.of(ClassDetails.CATEGORY_TITLE), org.hamcrest.Matchers.equalTo(user.recall("clase"))));
+        GivenWhenThen.then(user).should(GivenWhenThen.seeThat(ValidateClassSelection.classSelected(user.recall("clase"),ClassDetails.CATEGORY_TITLE)));
     }
 }
