@@ -4,10 +4,10 @@ import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisi
 
 import org.openqa.selenium.WebDriver;
 
-import co.com.udea.certificacion.busqueda_de_vuelos_B.questions.ValidateClassSelection;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.CorrectFlightSearch;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectClass;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.questions.CheckIfSelectedClass;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.DoA;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.OpenThe;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.SelectClass;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.ClassDetails;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.ListedFlightsPage;
 import io.cucumber.java.Before;
@@ -36,7 +36,7 @@ public class SeleccionarClase {
 
     @Given("el usuario abre la lista desplegable de clases")
     public void elUsuarioAbreLaListaDesplegableDeClases() {
-        user.attemptsTo(CorrectFlightSearch.with());
+        user.attemptsTo(DoA.searchWithResults());
         user.attemptsTo(
                 WaitUntil.the(ListedFlightsPage.CATEGORY_BTN, isVisible()).forNoMoreThan(20).seconds(),
                 Click.on(ListedFlightsPage.CATEGORY_BTN));
@@ -52,7 +52,7 @@ public class SeleccionarClase {
     @Then("el sistema cambia el vuelo a la clase seleccionada")
     public void elSistemaPermiteElegirClaseEconomicaPrimeraClaseYOtras() {
         GivenWhenThen.then(user).should(GivenWhenThen.seeThat(
-                ValidateClassSelection.classSelected(user.recall("flightClass"), ListedFlightsPage.CATEGORY_BTN)));
+                CheckIfSelectedClass.is(user.recall("flightClass"), ListedFlightsPage.CATEGORY_BTN)));
     }
 
     @When("el usuario selecciona la opcion de {string}")
@@ -66,6 +66,6 @@ public class SeleccionarClase {
     @Then("el sistema muestra los detalles de la clase seleccionada, como restricciones y beneficios")
     public void elSistemaMuestraDetallesDeClaseSeleccionada() {
         GivenWhenThen.then(user).should(GivenWhenThen
-                .seeThat(ValidateClassSelection.classSelected(user.recall("clase"), ClassDetails.CATEGORY_TITLE)));
+                .seeThat(CheckIfSelectedClass.is(user.recall("clase"), ClassDetails.CATEGORY_TITLE)));
     }
 }

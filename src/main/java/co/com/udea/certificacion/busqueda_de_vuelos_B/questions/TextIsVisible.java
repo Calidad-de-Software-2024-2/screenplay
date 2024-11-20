@@ -1,7 +1,7 @@
 package co.com.udea.certificacion.busqueda_de_vuelos_B.questions;
 
-import org.openqa.selenium.By;
-
+import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.FlightSearchPage;
+import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
@@ -17,7 +17,8 @@ public class TextIsVisible implements Question<Boolean> {
     @Override
     public Boolean answeredBy(Actor actor) {
         return BrowseTheWeb.as(actor)
-                .isElementVisible(By.xpath("/html/body//p[contains(text(),'%s')]".formatted(text)));
+                .isElementVisible(By
+                        .xpath(FlightSearchPage.A_TEXT_CONTAINING.of(text).getCssOrXPathSelector()));
     }
 
     public static TextIsVisible originCityRequired() {

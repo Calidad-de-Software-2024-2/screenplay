@@ -1,23 +1,21 @@
 package co.com.udea.certificacion.busqueda_de_vuelos_B.questions;
 
+import java.util.List;
+
+import net.serenitybdd.core.pages.WebElementFacade;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
 import net.serenitybdd.screenplay.targets.Target;
-import org.openqa.selenium.WebElement;
-import net.serenitybdd.core.pages.WebElementFacade;
 
-import java.util.List;
-
-public class ValidatePriceRange implements Question<Boolean> {
+public class CheckIfPrice implements Question<Boolean> {
     private final double minPrice;
     private final double maxPrice;
     private final Target priceTarget;
 
-    public ValidatePriceRange(String priceRange, Target priceTarget) {
-        // Convertir el rango de precios de cadena a números
-        String[] rangeParts = priceRange.split(",");
-        this.minPrice = Double.parseDouble(rangeParts[0].trim());
-        this.maxPrice = Double.parseDouble(rangeParts[1].trim());
+    public CheckIfPrice(Double[] priceRange, Target priceTarget) {
+        Double[] rangeParts = priceRange;
+        this.minPrice = rangeParts[0];
+        this.maxPrice = rangeParts[1];
         this.priceTarget = priceTarget;
     }
 
@@ -40,7 +38,7 @@ public class ValidatePriceRange implements Question<Boolean> {
         }
         return true; 
     }
-    public static ValidatePriceRange isWithin(String priceRange, Target priceTarget) {
-        return new ValidatePriceRange(priceRange, priceTarget);
+    public static CheckIfPrice isWithin(Double[] priceRange, Target priceTarget) {
+        return new CheckIfPrice(priceRange, priceTarget);
     }
 }

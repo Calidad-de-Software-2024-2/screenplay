@@ -2,10 +2,10 @@ package co.com.udea.certificacion.busqueda_de_vuelos_B.tasks;
 
 import java.time.LocalDate;
 
-import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectCity;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectDate;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectDateOf;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectPassengers;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectTravelType;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectTheCityOf;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectTheTravelType;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.FlightSearchPage;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
@@ -41,18 +41,16 @@ public class FillThe implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                SelectCity.origin(origin),
-                SelectCity.destination(destiny));
+                SelectTheCityOf.origin(origin),
+                SelectTheCityOf.destination(destiny));
 
-        // actor.attemptsTo(Click.on(FlightSearchPage.DATE_SELECTION_BTN)); // abre la
-        // selección de fechas
         if (returnDate != null) { // ida y vuelta
-            actor.attemptsTo(SelectTravelType.roundTrip(), SelectDate.returnDate(returnDate),
-                    SelectDate.departureDate(departureDate, true));
+            actor.attemptsTo(SelectTheTravelType.asRoundTrip(), SelectDateOf.returnDate(returnDate),
+                    SelectDateOf.departureDate(departureDate, true));
         } else { // solo ida
             actor.attemptsTo(
                     Click.on(FlightSearchPage.DATE_SELECTION_BTN),
-                    SelectDate.departureDate(departureDate, false));
+                    SelectDateOf.departureDate(departureDate, false));
         }
 
         actor.attemptsTo(

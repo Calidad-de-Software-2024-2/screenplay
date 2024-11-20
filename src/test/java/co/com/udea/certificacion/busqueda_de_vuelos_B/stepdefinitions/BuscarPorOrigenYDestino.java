@@ -1,28 +1,24 @@
 package co.com.udea.certificacion.busqueda_de_vuelos_B.stepdefinitions;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
-import static org.hamcrest.Matchers.equalToIgnoringCase;
 
 import java.time.LocalDate;
 
 import org.openqa.selenium.WebDriver;
 
-import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectCity;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectDate;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectDateOf;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectPassengers;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.questions.FlightProperty;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.interactions.SelectTheCityOf;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.questions.AllFlightsMatch;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.questions.TextIsVisible;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.OpenThe;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.FlightSearchPage;
-import co.com.udea.certificacion.busqueda_de_vuelos_B.userinterfaces.ListedFlightsPage;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.annotations.Managed;
-import net.serenitybdd.core.pages.ListOfWebElementFacades;
-import net.serenitybdd.core.pages.WebElementFacade;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.actions.Click;
@@ -48,14 +44,14 @@ public class BuscarPorOrigenYDestino {
 
     @And("ha rellenado los demás campos necesarios")
     public void and() {
-        user.attemptsTo(SelectDate.departureDate(LocalDate.now(), false),
+        user.attemptsTo(SelectDateOf.departureDate(LocalDate.now(), false),
                 SelectPassengers.of(3));
     }
 
     @When("el usuario selecciona un origen y destino")
     public void when() {
-        user.attemptsTo(SelectCity.origin(originCity),
-                SelectCity.destination(destinationCity));
+        user.attemptsTo(SelectTheCityOf.origin(originCity),
+                SelectTheCityOf.destination(destinationCity));
     }
 
     @And("procede con la búsqueda")
@@ -65,11 +61,7 @@ public class BuscarPorOrigenYDestino {
 
     @Then("el sistema muestra los vuelos disponibles para el origen y destino seleccionados")
     public void then() {
-        ListOfWebElementFacades a = ListedFlightsPage.A_FLIGHT_CARD.resolveAllFor(user);
-        for (WebElementFacade el : a) {
-            user.should(seeThat(FlightProperty.origin(el), equalToIgnoringCase(originCity)),
-                    seeThat(FlightProperty.destination(el), equalToIgnoringCase(destinationCity)));
-        }
+        user.should(seeThat(AllFlightsMatch.theOriginAndDestination(originCity, destinationCity)));
     }
 
     @When("el usuario intenta proceder con la busqueda sin seleccionar un origen y destino")

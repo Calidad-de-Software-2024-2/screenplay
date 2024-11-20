@@ -4,12 +4,12 @@ import net.serenitybdd.core.pages.WebElementFacade;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
 
-public class FlightProperty implements Question<String> {
+public class ValueOf implements Question<String> {
 
     WebElementFacade container;
     String propertyName;
 
-    public FlightProperty(WebElementFacade container, String expected) {
+    public ValueOf(WebElementFacade container, String expected) {
         this.container = container;
         this.propertyName = expected;
     }
@@ -22,12 +22,12 @@ public class FlightProperty implements Question<String> {
         return propertyElement.getText().replace(propertyName, "").replaceAll(":", "").trim();
     }
 
-    public static FlightProperty origin(WebElementFacade card) {
-        return new FlightProperty(card, "Origin");
+    public static ValueOf originOf(WebElementFacade card) {
+        return new ValueOf(card, "Origin");
     }
 
-    public static FlightProperty destination(WebElementFacade card) {
-        return new FlightProperty(card, "Destination");
+    public static ValueOf destinationOf(WebElementFacade card) {
+        return new ValueOf(card, "Destination");
     }
 
 }

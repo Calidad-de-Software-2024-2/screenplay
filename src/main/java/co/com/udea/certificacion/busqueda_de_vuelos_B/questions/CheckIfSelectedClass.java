@@ -5,13 +5,14 @@ import net.serenitybdd.screenplay.Question;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.targets.Target;
 
-public class ValidateClassSelection implements Question<Boolean> {
+public class CheckIfSelectedClass implements Question<Boolean> {
     private String clase;
     private Target labelToCompare;
-        public ValidateClassSelection(String clase,Target labelToCompare) {
-            this.clase = clase;
-            this.labelToCompare=labelToCompare;
-        }
+
+    public CheckIfSelectedClass(String clase, Target labelToCompare) {
+        this.clase = clase;
+        this.labelToCompare = labelToCompare;
+    }
 
     @Override
     public Boolean answeredBy(Actor actor) {
@@ -19,8 +20,8 @@ public class ValidateClassSelection implements Question<Boolean> {
         return msg.contains(clase);
     }
 
-    public static ValidateClassSelection classSelected(String clase,Target labelToCompare) {
-        return new ValidateClassSelection(clase,labelToCompare);
+    public static CheckIfSelectedClass is(String clase, Target labelToCompare) {
+        return new CheckIfSelectedClass(clase, labelToCompare);
     }
-    
+
 }

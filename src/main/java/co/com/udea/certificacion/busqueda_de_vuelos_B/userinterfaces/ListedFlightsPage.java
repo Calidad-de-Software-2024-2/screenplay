@@ -6,17 +6,15 @@ import net.serenitybdd.screenplay.targets.Target;
 public class ListedFlightsPage {
 
     public static final Target FILTERS_BTN = Target.the("Abrir filtros")
-            .locatedBy("/html/body/div/div/div/div/div[1]/div/button");
+            .locatedBy("/html/body/div/div/div//button[contains(.,'Filters')]");
 
     public static final Target PRICE_FILTER_BTN = Target.the("Filtro de precios")
             .locatedBy("/html/body/div[3]/div/button[2]");
 
     public static final Target PRICE_RANGE_BTN = Target.the("Rango de precios")
             .locatedBy("/html/body/div[4]/div/div/div/div[3]");
-            public static final Target PRICE_P = Target.the("Etiqueta de precio")
+    public static final Target A_PRICE_TAG = Target.the("Etiqueta de precio")
             .locatedBy("//p[contains(text(),'USD')]");
-    public static final Target PRICE = Target.the("Precio mínimo")
-            .locatedBy("/html/body/div/div/div/div/div[2]/div//p[contains(text(),'USD')]");
     public static final Target APPLY_FILTERS_BTN = Target.the("Aplicar filtros").located(By.buttonText("Apply"));
     public static final Target DATE_RANGE_BTN = Target.the("Seleccionar rango de fechas")
             .located(By.buttonText("Rango de fechas"));
