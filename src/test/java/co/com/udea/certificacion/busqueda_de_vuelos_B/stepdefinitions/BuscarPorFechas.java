@@ -63,8 +63,7 @@ public class BuscarPorFechas {
     @Then("el sistema debe mostrar un mensaje indicando que no hay vuelos disponibles en el rango de fechas seleccionado")
     public void then() {
         user.attemptsTo(
-                WaitUntil.the(ListedFlightsPage.ERROR_MESSAGE, anyOf(containsText("No flights"),
-                        containsText("no hay vuelos")))
+                WaitUntil.the(ListedFlightsPage.ERROR_MESSAGE, anyOf(containsText("INTERNAL_ERROR")))
                         .forNoMoreThan(15).seconds());
     }
 

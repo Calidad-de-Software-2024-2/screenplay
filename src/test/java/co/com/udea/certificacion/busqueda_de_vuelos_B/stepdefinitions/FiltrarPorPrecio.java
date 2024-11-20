@@ -5,6 +5,8 @@ import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import net.serenitybdd.screenplay.GivenWhenThen;
+import co.com.udea.certificacion.busqueda_de_vuelos_B.questions.ValidatePriceRange;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.CorrectFlightSearch;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.FilterBy;
 import co.com.udea.certificacion.busqueda_de_vuelos_B.tasks.OpenThe;
@@ -15,6 +17,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.core.annotations.findby.By;
+import net.serenitybdd.core.pages.WebElementFacade;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
@@ -46,28 +49,12 @@ public class FiltrarPorPrecio {
         user.attemptsTo(FilterBy.price());
     }
 
-    @Then("el sistema debe mostrar solo los vuelos que estén dentro del rango de precios seleccionado")
-    public void then() {
-        // Esperar hasta que las tarjetas de vuelos estén presentes
-        // Localizar las tarjetas de vuelos después de la espera
-        List<WebElement> tarjetasDeVuelos = theDriver
-                .findElements(By.xpath("/html/body/div/div/div/div/div[2]/div//p[contains(text(),'USD')]"));
+@Then("el sistema debe mostrar solo los vuelos que estén dentro del rango de precios seleccionado")
+public void then() {
+    Actor actor = Actor.named("Tester").whoCan(BrowseTheWeb.with(theDriver));
 
-        // Iterar sobre cada elemento encontrado y validar los precios
-        tarjetasDeVuelos.forEach(price -> {
-            String precioTexto = price.getText().replace("USD$", "").trim();
-
-            try {
-                double precio = Double.parseDouble(precioTexto);
-
-                // Validar que el precio está dentro del rango permitido
-                if (precio < 100 || precio > 200) {
-                    throw new AssertionError("El vuelo con precio " + precio + " está fuera del rango [100, 200]");
-                }
-            } catch (NumberFormatException e) {
-                throw new AssertionError("No se pudo convertir el precio a un número en la tarjeta: " + precioTexto);
-            }
-        });
-    }
+    // Validar que todos los precios estén dentro del rango especificado usando el formato GivenWhenThen
+    GivenWhenThen.then(actor).should(GivenWhenThen.seeThat(ValidatePriceRange.isWithin("100,200", ListedFlightsPage.PRICE_P)));
+}
 
 }
