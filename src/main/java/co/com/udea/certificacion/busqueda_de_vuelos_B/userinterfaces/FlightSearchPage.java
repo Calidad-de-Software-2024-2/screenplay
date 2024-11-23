@@ -12,6 +12,12 @@ public class FlightSearchPage extends PageObject {
     
     public static final Target DATE_SELECTION_BTN = Target.the("Fecha de salida")
             .locatedBy("/html/body/div/div/div/div/form/div[3]/div[1]//button");
+
+    public static final Target NEXT_MONTH_BTN = Target.the("Mes siguiente")
+            .locatedBy("//button[@name='next-month']");
+    public static final Target PREVIOUS_MONTH_BTN = Target.the("Mes anterior")
+            .locatedBy("//button[@name='previous-month']");
+
     public static final Target ROUND_TRIP = Target.the("Viaje redondo")
             .locatedBy("/html/body/div/div/div/div/form/div[2]/div/div[2]/button");
     public static final Target ONE_WAY = Target.the("Viaje solo ida")

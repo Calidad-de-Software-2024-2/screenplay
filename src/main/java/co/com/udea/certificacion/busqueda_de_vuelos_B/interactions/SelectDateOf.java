@@ -2,6 +2,7 @@ package co.com.udea.certificacion.busqueda_de_vuelos_B.interactions;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import org.openqa.selenium.By;
 
@@ -32,6 +33,16 @@ public class SelectDateOf implements Interaction {
         if (!dateSelectionOpened) {
             // open it to select a date
             actor.attemptsTo(Click.on(FlightSearchPage.DATE_SELECTION_BTN));
+        }
+
+        long monthsToSwitch = LocalDate.now().until(date, ChronoUnit.MONTHS);
+        Target switchBtn = monthsToSwitch < 0 ? FlightSearchPage.PREVIOUS_MONTH_BTN : FlightSearchPage.NEXT_MONTH_BTN;
+        switchBtn = Target.the("btn")
+                .locatedBy(calendarContainer.getCssOrXPathSelector() + switchBtn.getCssOrXPathSelector());
+
+        // navigate to the corresponding month
+        for (int i = 0; i < Math.abs(monthsToSwitch); i++) {
+            actor.attemptsTo(Click.on(switchBtn));
         }
 
         Target dayButton = FlightSearchPage.btnInside(calendarContainer, Integer.toString(date.getDayOfMonth()));
