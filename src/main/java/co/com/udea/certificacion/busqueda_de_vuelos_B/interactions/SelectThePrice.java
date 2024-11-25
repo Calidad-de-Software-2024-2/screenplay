@@ -16,5 +16,9 @@ public class SelectThePrice extends SequenceOfClicks {
         return Tasks.instrumented(SelectThePrice.class, ListedFlightsPage.PRICE_FILTER_BTN,
                 ListedFlightsPage.PRICE_RANGE_BTN);
     }
+    public static SelectThePrice of200to300() {
+        return Tasks.instrumented(SelectThePrice.class, ListedFlightsPage.PRICE_FILTER_BTN,
+                ListedFlightsPage.PRICE_RANGE_200_300);
+    }
 
 }

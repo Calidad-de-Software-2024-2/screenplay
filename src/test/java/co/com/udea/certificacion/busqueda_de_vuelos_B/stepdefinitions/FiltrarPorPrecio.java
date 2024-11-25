@@ -1,6 +1,8 @@
 package co.com.udea.certificacion.busqueda_de_vuelos_B.stepdefinitions;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.containsText;
+import static org.hamcrest.Matchers.anyOf;
 
 import org.openqa.selenium.WebDriver;
 
@@ -16,6 +18,7 @@ import io.cucumber.java.en.When;
 import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
+import net.serenitybdd.screenplay.waits.WaitUntil;
 
 public class FiltrarPorPrecio {
     Actor user = Actor.named("usuario");
@@ -37,12 +40,23 @@ public class FiltrarPorPrecio {
 
     @When("el usuario filtra por un rango de precios")
     public void when() {
-        user.attemptsTo(FilterBy.priceRange());
+        user.attemptsTo(FilterBy.priceRange("100to200"));
+    }
+    
+    @When("el usuario filtra por un rango de precios que no tiene vuelos disponibles")
+    public void noFlightsFilter() {
+        user.attemptsTo(FilterBy.priceRange("200to300"));
     }
 
     @Then("el sistema debe mostrar solo los vuelos que estén dentro del rango de precios seleccionado")
     public void then() {
         user.should(seeThat(CheckIfPrice.isWithin(new Double[] { 100d, 200d }, ListedFlightsPage.A_PRICE_TAG)));
     }
-
+    @Then("el sistema debe mostrar un mensaje indicando que no hay vuelos disponibles en el rango seleccionado")
+    public void noFlightsAvailable() {
+        user.attemptsTo(
+                WaitUntil.the(ListedFlightsPage.ERROR_MESSAGE, anyOf(containsText("No flights")))
+                        .forNoMoreThan(15).seconds());
+    }
+    
 }

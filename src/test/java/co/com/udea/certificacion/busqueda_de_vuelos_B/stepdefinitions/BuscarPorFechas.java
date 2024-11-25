@@ -44,7 +44,7 @@ public class BuscarPorFechas {
 
     @Then("el sistema muestra un mensaje de error indicando que la fecha máxima no puede ser anterior a la fecha mínima")
     public void elSistemaMuestraMensajeErrorFechaMaximaAnteriorFechaMinima() {
-        WaitUntil.the(ListedFlightsPage.ERROR_MESSAGE, WebElementStateMatchers.containsText("No flights"))
+        WaitUntil.the(ListedFlightsPage.ERROR_MESSAGE, WebElementStateMatchers.containsText("la fecha máxima no puede ser anterior a la fecha mínima"))
                 .forNoMoreThan(5).seconds();
     }
 

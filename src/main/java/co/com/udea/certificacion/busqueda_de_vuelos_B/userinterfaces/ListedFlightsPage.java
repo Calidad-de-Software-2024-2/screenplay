@@ -13,6 +13,8 @@ public class ListedFlightsPage {
 
     public static final Target PRICE_RANGE_BTN = Target.the("Rango de precios")
             .locatedBy("/html/body/div[4]/div/div/div/div[3]");
+        public static final Target PRICE_RANGE_200_300 = Target.the("Rango de precios")
+            .locatedBy("/html/body/div[4]/div/div/div/div[4]");        
     public static final Target A_PRICE_TAG = Target.the("Etiqueta de precio")
             .locatedBy("//p[contains(text(),'USD')]");
     public static final Target APPLY_FILTERS_BTN = Target.the("Aplicar filtros").located(By.buttonText("Apply"));
