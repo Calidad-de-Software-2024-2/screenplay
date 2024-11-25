@@ -18,7 +18,7 @@ public class DoA implements Task {
         user.attemptsTo(FillThe.departureFields("Barranquilla", "Cali", tomorrow, 2));
         user.attemptsTo(Click.on(FlightSearchPage.SEARCH_BTN),
                 WaitUntil.the(ListedFlightsPage.A_PRICE_TAG, WebElementStateMatchers.isVisible())
-                        .forNoMoreThan(10).seconds());
+                        .forNoMoreThan(15).seconds());
     }
 
     public static DoA searchWithResults() {
