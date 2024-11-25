@@ -42,7 +42,7 @@ public class FlightSearchPage extends PageObject {
 
     public static final Target btnInside(Target container, String text) {
         return Target.the("Button %s".formatted(text))
-                .locatedBy(container.getCssOrXPathSelector() + "//button[text()='{0}']").of(text);
+                .locatedBy(container.getCssOrXPathSelector() + "//button[text()='{0}' and not(@disabled)]").of(text);
     }
 
     public static final Target SEARCH_BTN = Target.the("Buscar")
